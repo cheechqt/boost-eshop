@@ -29,7 +29,7 @@ function Login() {
           </button>
           <span className={styles.register}>
             <p>Don't have an account?</p>
-            <Link to="/register">&nbsp;Register</Link>
+            <Link to="/register">Register</Link>
           </span>
         </div>
       </Card>
