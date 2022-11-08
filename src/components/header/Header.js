@@ -1,6 +1,9 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { FaShoppingCart, FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/config";
+import { toast } from "react-toastify";
+import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import styles from "./Header.module.scss";
 
@@ -29,6 +32,8 @@ const activeLink = ({ isActive }) =>
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -37,6 +42,28 @@ function Header() {
   const hideMenu = () => {
     setShowMenu(false);
   };
+
+  const logoutUser = (e) => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logout successfully.");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
+  // check current user
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setDisplayName(user.displayName);
+      } else {
+        setDisplayName("");
+      }
+    });
+  }, []);
 
   return (
     <header>
@@ -76,11 +103,18 @@ function Header() {
               <NavLink to="/login" className={activeLink}>
                 Login
               </NavLink>
+              <a href="#">
+                <FaUserCircle size={16} />
+                Hi, {displayName}
+              </a>
               <NavLink to="/register" className={activeLink}>
                 Register
               </NavLink>
               <NavLink to="/order-history" className={activeLink}>
                 My Orders
+              </NavLink>
+              <NavLink to="/" onClick={logoutUser}>
+                Logout
               </NavLink>
             </span>
             {cart}
