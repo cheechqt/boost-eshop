@@ -10,7 +10,6 @@ function Login() {
       <div className={styles.img}>
         <img src={loginImg} alt="Login" width="400" />
       </div>
-
       <Card>
         <div className={styles.form}>
           <h2>Login</h2>
