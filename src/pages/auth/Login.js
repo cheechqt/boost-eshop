@@ -24,9 +24,7 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
+      .then(() => {
         toast.success("Login Successful... ");
         setIsLoading(false);
         navigate("/");
@@ -41,8 +39,7 @@ function Login() {
   const signInWithGoogle = (e) => {
     setIsLoading(true);
     signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
+      .then(() => {
         toast.success("Login Successfully");
         setIsLoading(false);
         navigate("/");
