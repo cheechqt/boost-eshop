@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
+import { AdminOnlyLink } from "../adminOnly/AdminOnly";
 import styles from "./Header.module.scss";
 
 const logo = (
@@ -110,6 +111,13 @@ function Header() {
               <FaTimes size={22} color="#fff" onClick={hideMenu} />
             </li>
             <li>
+              <AdminOnlyLink>
+                <Link to="admin/home">
+                  <buttom className="--btn --btn-primary">Admin</buttom>
+                </Link>
+              </AdminOnlyLink>
+            </li>
+            <li>
               <NavLink to="/" className={activeLink}>
                 Home
               </NavLink>
@@ -128,7 +136,7 @@ function Header() {
                 </NavLink>
               </ShowOnLogout>
               <ShowOnLogin>
-                <a href="#home" style={{color: "#ff7722"}}>
+                <a href="#home" style={{ color: "#ff7722" }}>
                   <FaUserCircle size={16} />
                   Hi, {displayName}
                 </a>

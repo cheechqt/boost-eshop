@@ -20,6 +20,7 @@ function Register() {
     e.preventDefault();
     if (password !== cPassword) {
       toast.error("Passwords do not match.");
+      return null;
     }
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
