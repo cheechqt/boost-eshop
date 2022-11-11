@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../../redux/slice/productSlice";
 import { toast } from "react-toastify";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../../../firebase/config";
@@ -15,20 +17,34 @@ const categories = [
   { id: 4, name: "Phone" },
 ];
 
+const initialState = {
+  name: "",
+  imageUrl: "",
+  price: 0,
+  category: "",
+  brand: "",
+  desc: "",
+};
+
 function AddProduct() {
-  const initialProductState = {
-    name: "",
-    imageUrl: "",
-    price: 0,
-    category: "",
-    brand: "",
-    desc: "",
-  };
-  const [product, setProduct] = useState({ ...initialProductState });
+  const { id } = useParams();
+  const products = useSelector(selectProducts);
+  const productEdit = products.find((item) => item.id === id);
+  console.log(productEdit);
+
+  const [product, setProduct] = useState(() => {
+    return detectForm(id, { ...initialState }, productEdit);
+  });
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
+
+  function detectForm(id, f1, f2) {
+    if (id === "ADD") {
+      return f1;
+    }
+    return f2;
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +78,7 @@ function AddProduct() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const docRef = addDoc(collection(db, "products"), {
+      addDoc(collection(db, "products"), {
         name: product.name,
         imageUrl: product.imageUrl,
         price: +product.price,
@@ -73,10 +89,22 @@ function AddProduct() {
       });
       setIsLoading(false);
       setUploadProgress(0);
-      setProduct({ ...initialProductState });
+      setProduct({ ...initialState });
       toast.success("Product uploaded successfully.");
       navigate("/admin/all-products");
     } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
+  };
+
+  const editProduct = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+    } catch (error) {
+      setIsLoading(false);
       toast.error(error.message);
     }
   };
@@ -85,9 +113,9 @@ function AddProduct() {
     <>
       {isLoading && <Loader />}
       <div className={styles.product}>
-        <h1>Add New Product</h1>
+        <h2>{detectForm(id, "Add New Product", "Edit Product")}</h2>
         <Card cardClass={styles.card}>
-          <form onSubmit={addProduct}>
+          <form onSubmit={detectForm(id, addProduct, editProduct)}>
             <label>Product Name:</label>
             <input
               type="text"
