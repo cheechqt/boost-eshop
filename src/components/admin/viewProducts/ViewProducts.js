@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProducts, STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 import { toast } from "react-toastify";
 import {
   collection,
@@ -14,38 +14,19 @@ import {
 import { ref, deleteObject } from "firebase/storage";
 import { db, storage } from "../../../firebase/config";
 import { Confirm } from "notiflix/build/notiflix-confirm-aio";
+import useFetchCollection from "../../../hooks/useFetchCollection";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Loader from "../../loader/Loader";
 import styles from "./ViewProducts.module.scss";
 
 function ViewProducts() {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
+  const { data, isLoading } = useFetchCollection("products");
+  const products = useSelector(selectProducts)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducts();
-  }, []);
-  const getProducts = () => {
-    setIsLoading(true);
-    try {
-      const colRef = collection(db, "products");
-      const q = query(colRef, orderBy("createdAt", "desc"));
-      onSnapshot(q, (snapshot) => {
-        const allProducts = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setProducts(allProducts);
-        setIsLoading(false);
-        dispatch(STORE_PRODUCTS({ products: allProducts }));
-      });
-    } catch (error) {
-      setIsLoading(false);
-      toast.error(error.message);
-    }
-  };
+    dispatch(STORE_PRODUCTS({ products: data }));
+  }, [dispatch, data])
 
   const deleteProduct = async (id, imageUrl) => {
     try {

@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../../redux/slice/productSlice";
 import { toast } from "react-toastify";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { collection, addDoc, Timestamp, doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 import { storage, db } from "../../../firebase/config";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
 import Loader from "../../loader/Loader";
 import Card from "../../card/Card";
 import styles from "./AddProduct.module.scss";
@@ -30,7 +30,6 @@ function AddProduct() {
   const { id } = useParams();
   const products = useSelector(selectProducts);
   const productEdit = products.find((item) => item.id === id);
-  console.log(productEdit);
 
   const [product, setProduct] = useState(() => {
     return detectForm(id, { ...initialState }, productEdit);
@@ -102,7 +101,24 @@ function AddProduct() {
     e.preventDefault();
     setIsLoading(true);
 
+    if (product.imageUrl !== productEdit.imageUrl) {
+      deleteObject(ref(storage, productEdit.imageUrl));
+    }
+
     try {
+      setDoc(doc(db, "products", id), {
+        name: product.name,
+        imageUrl: product.imageUrl,
+        price: +product.price,
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate(),
+      });
+      setIsLoading(false);
+      toast.success("Product Edited Successfully.");
+      navigate("/admin/all-products");
     } catch (error) {
       setIsLoading(false);
       toast.error(error.message);
