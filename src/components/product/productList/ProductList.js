@@ -9,6 +9,7 @@ import {
 } from "../../../redux/slice/filterSlice";
 import Search from "../../search/Search";
 import ProductItem from "../productItem/ProductItem";
+import Pagination from "../../pagination/Pagination";
 import styles from "./ProductList.module.scss";
 
 function ProductList({ products }) {
@@ -16,6 +17,16 @@ function ProductList({ products }) {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("latest");
   const filteredProducts = useSelector(selectFilteredProducts);
+
+  // Pagination
+  const [curPage, setCurPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(9);
+  const indexOfLastProduct = curPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const curProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const dispatch = useDispatch();
 
@@ -65,7 +76,7 @@ function ProductList({ products }) {
           <p>No product found.</p>
         ) : (
           <>
-            {filteredProducts.map((product) => {
+            {curProducts.map((product) => {
               return (
                 <div key={product.id}>
                   <ProductItem {...product} grid={grid} product={product} />
@@ -75,6 +86,12 @@ function ProductList({ products }) {
           </>
         )}
       </div>
+      <Pagination
+        productsPerPage={productsPerPage}
+        curPage={curPage}
+        setCurPage={setCurPage}
+        totalProducts={filteredProducts.length}
+      />
     </div>
   );
 }

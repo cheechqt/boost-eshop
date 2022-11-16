@@ -5,6 +5,7 @@ import { Header, Footer } from "./components";
 import { Home, Contact, Login, Register, Reset, Admin } from "./pages";
 import { AdminOnlyRoute } from "./components/adminOnly/AdminOnly";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
+import Cart from "./pages/cart/Cart";
 import "./App.scss";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           }
         />
         <Route path="/product-details/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart/>}/>
       </Routes>
       <Footer />
     </>
