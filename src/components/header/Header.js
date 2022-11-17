@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import {
   SET_ACTIVE_USER,
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
+import {
+  CALC_TOTAL_QUANTITY,
+  selectCartTotalQuantity,
+} from "../../redux/slice/cartSlice";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { toast } from "react-toastify";
 import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
@@ -40,29 +44,12 @@ const activeLink = ({ isActive }) =>
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
+  const [scrollPage, setScrollPage] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
-
-  const hideMenu = () => {
-    setShowMenu(false);
-  };
-
-  const logoutUser = (e) => {
-    signOut(auth)
-      .then(() => {
-        toast.success("Logout successfully.");
-        navigate("/");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  };
-
-  // check current user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -88,8 +75,60 @@ function Header() {
     });
   }, [dispatch, displayName]);
 
+  useEffect(() => {
+    dispatch(CALC_TOTAL_QUANTITY());
+  });
+
+  const fixNavbar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
+  window.addEventListener("scroll", fixNavbar);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const hideMenu = () => {
+    setShowMenu(false);
+  };
+
+  const logoutUser = (e) => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logout successfully.");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart
+        <FaShoppingCart size={20} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
+
+  const logo = (
+    <div className={styles.logo}>
+      <Link>
+        <h2>
+          e<span>Shop</span>.
+        </h2>
+      </Link>
+    </div>
+  );
+
   return (
-    <header>
+    <header className={scrollPage ? `${styles.fixed}` : null}>
       <div className={styles.header}>
         {logo}
         <nav
