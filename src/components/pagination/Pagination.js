@@ -39,7 +39,7 @@ function Pagination({ productsPerPage, curPage, setCurPage, totalProducts }) {
     <ul className={styles.pagination}>
       <li
         onClick={paginatePrev}
-        className={curPage === pageNums[0] && `${styles.hidden}`}
+        className={curPage === pageNums[0] ? `${styles.hidden}` : null}
       >
         Prev
       </li>
@@ -49,7 +49,7 @@ function Pagination({ productsPerPage, curPage, setCurPage, totalProducts }) {
             <li
               key={num}
               onClick={() => paginate(num)}
-              className={curPage === num && `${styles.active}`}
+              className={curPage === num ? `${styles.active}` : null}
             >
               {num}
             </li>
@@ -59,7 +59,7 @@ function Pagination({ productsPerPage, curPage, setCurPage, totalProducts }) {
       <li
         onClick={paginateNext}
         className={
-          curPage === pageNums[pageNums.length - 1] && `${styles.hidden}`
+          curPage === pageNums[pageNums.length - 1] ? `${styles.hidden}` : null
         }
       >
         Next

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectPrevUrl } from "../../redux/slice/cartSlice";
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { toast } from "react-toastify";
 import Loader from "../../components/loader/Loader";
 import { FaGoogle } from "react-icons/fa";
 import Card from "../../components/card/Card";
@@ -19,6 +21,15 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const prevUrl = useSelector(selectPrevUrl);
+
+  const redirectUser = () => {
+    if (prevUrl.includes("cart")) {
+      navigate("/cart");
+    } else {
+      navigate("/");
+    }
+  };
 
   const loginUser = (e) => {
     e.preventDefault();
@@ -27,7 +38,7 @@ function Login() {
       .then(() => {
         toast.success("Login Successful... ");
         setIsLoading(false);
-        navigate("/");
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);
@@ -42,7 +53,7 @@ function Login() {
       .then(() => {
         toast.success("Login Successfully");
         setIsLoading(false);
-        navigate("/");
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);
