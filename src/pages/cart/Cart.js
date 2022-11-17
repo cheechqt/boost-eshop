@@ -1,6 +1,13 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  ADD_TO_CART,
+  CALC_SUBTOTAL,
+  CALC_TOTAL_QUANTITY,
+  CLEAR_CART,
+  DECREASE_CART,
+  REMOVE_FROM_CART,
   selectCartItems,
   selectCartTotalAmount,
   selectCartTotalQuantity,
@@ -13,6 +20,30 @@ function Cart() {
   const cartItems = useSelector(selectCartItems);
   const cartTotalAmount = useSelector(selectCartTotalAmount);
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CALC_SUBTOTAL(cartItems));
+    dispatch(CALC_TOTAL_QUANTITY());
+  }, [dispatch, cartItems]);
+
+  const increaseCart = (cart) => {
+    dispatch(ADD_TO_CART(cart));
+  };
+
+  const decreaseCart = (cart) => {
+    dispatch(DECREASE_CART(cart));
+  };
+
+  const removeFromCart = (cart) => {
+    dispatch(REMOVE_FROM_CART(cart));
+  };
+
+  const clearCart = () => {
+    dispatch(CLEAR_CART());
+  };
+
   return (
     <section>
       <div className={`container ${styles.table}`}>
@@ -59,7 +90,7 @@ function Cart() {
                         <div className={styles.count}>
                           <button
                             className="--btn"
-                            // onClick={() => decreaseCart(cart)}
+                            onClick={() => decreaseCart(cart)}
                           >
                             -
                           </button>
@@ -68,7 +99,7 @@ function Cart() {
                           </p>
                           <button
                             className="--btn"
-                            // onClick={() => increaseCart(cart)}
+                            onClick={() => increaseCart(cart)}
                           >
                             +
                           </button>
@@ -79,7 +110,7 @@ function Cart() {
                         <FaTrashAlt
                           size={19}
                           color="red"
-                          // onClick={() => removeFromCart(cart)}
+                          onClick={() => removeFromCart(cart)}
                         />
                       </td>
                     </tr>
@@ -88,7 +119,7 @@ function Cart() {
               </tbody>
             </table>
             <div className={styles.summary}>
-              <button className="--btn --btn-danger">
+              <button className="--btn --btn-danger" onClick={clearCart}>
                 Clear Cart
               </button>
               <div className={styles.checkout}>
@@ -98,7 +129,7 @@ function Cart() {
                 <br />
                 <Card cardClass={styles.card}>
                   <p>
-                    <b> {`Cart item(s): ${cartTotalQuantity}`}</b>
+                    <b> {`Cart item(s): ${cartTotalQuantity}`} </b>
                   </p>
                   <div className={styles.text}>
                     <h4>Subtotal:</h4>
