@@ -8,6 +8,7 @@ import ProductDetails from "./components/product/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
 import CheckoutDetails from "./pages/checkout/CheckoutDetails";
 import Checkout from "./pages/checkout/Checkout";
+import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
 import "./App.scss";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout-details" element={<CheckoutDetails />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
       </Routes>
       <Footer />
     </>
