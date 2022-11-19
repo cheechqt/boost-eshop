@@ -1,21 +1,40 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
 import {
-  useElements,
+  PaymentElement,
   useStripe,
-  PaymentElement
+  useElements,
 } from "@stripe/react-stripe-js";
+import styles from "./CheckoutForm.module.scss";
 import Card from "../card/Card";
 import CheckoutSummary from "../checkoutSummary/CheckoutSummary";
 import spinnerImg from "../../assets/spinner.jpg";
-import styles from "./CheckoutForm.module.scss";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEmail, selectUserId } from "../../redux/slice/authSlice";
+import {
+  CLEAR_CART,
+  selectCartItems,
+  selectCartTotalAmount,
+} from "../../redux/slice/cartSlice";
+import { selectShippingAddress } from "../../redux/slice/checkoutSlice";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useNavigate } from "react-router-dom";
 
-function CheckoutForm() {
+const CheckoutForm = () => {
+  const [message, setMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userId = useSelector(selectUserId);
+  const userEmail = useSelector(selectEmail);
+  const cartItems = useSelector(selectCartItems);
+  const cartTotalAmount = useSelector(selectCartTotalAmount);
+  const shippingAddress = useSelector(selectShippingAddress);
 
   useEffect(() => {
     if (!stripe) {
@@ -31,8 +50,30 @@ function CheckoutForm() {
     }
   }, [stripe]);
 
+  // Save order to Order History
   const saveOrder = () => {
-    console.log("Order saved");
+    const today = new Date();
+    const date = today.toDateString();
+    const time = today.toLocaleTimeString();
+    const orderConfig = {
+      userId,
+      userEmail,
+      orderDate: date,
+      orderTime: time,
+      orderAmount: cartTotalAmount,
+      orderStatus: "Order Placed...",
+      cartItems,
+      shippingAddress,
+      createdAt: Timestamp.now().toDate(),
+    };
+    try {
+      addDoc(collection(db, "orders"), orderConfig);
+      dispatch(CLEAR_CART());
+      toast.success("Order saved");
+      navigate("/checkout-success");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -40,8 +81,6 @@ function CheckoutForm() {
     setMessage(null);
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -54,27 +93,25 @@ function CheckoutForm() {
           // Make sure to change this to your payment completion page
           return_url: "http://localhost:3000/checkout-success",
         },
-        redirect_url: "if required",
+        redirect: "if_required",
       })
       .then((result) => {
+        // ok - paymentIntent // bad - error
         if (result.error) {
           toast.error(result.error.message);
           setMessage(result.error.message);
           return;
         }
         if (result.paymentIntent) {
-          if (result.paymentIntent.status === "succeded") {
+          if (result.paymentIntent.status === "succeeded") {
             setIsLoading(false);
             toast.success("Payment successful");
             saveOrder();
           }
         }
       });
-    setIsLoading(false);
-  };
 
-  const paymentElementOptions = {
-    layout: "tabs",
+    setIsLoading(false);
   };
 
   return (
@@ -90,10 +127,7 @@ function CheckoutForm() {
           <div>
             <Card cardClass={`${styles.card} ${styles.pay}`}>
               <h3>Stripe Checkout</h3>
-              <PaymentElement
-                id={styles["payment-element"]}
-                options={paymentElementOptions}
-              />
+              <PaymentElement id={styles["payment-element"]} />
               <button
                 disabled={isLoading || !stripe || !elements}
                 id="submit"
@@ -119,6 +153,6 @@ function CheckoutForm() {
       </div>
     </section>
   );
-}
+};
 
 export default CheckoutForm;
