@@ -86,7 +86,7 @@ function Cart() {
               </thead>
               <tbody>
                 {cartItems.map((cart, index) => {
-                  const { id, name, price, imageUrl, cartQuantity } = cart;
+                  const { id, name, price, imageURL, cartQuantity } = cart;
                   return (
                     <tr key={id}>
                       <td>{index + 1}</td>
@@ -95,7 +95,7 @@ function Cart() {
                           <b>{name}</b>
                         </p>
                         <img
-                          src={imageUrl}
+                          src={imageURL}
                           alt={name}
                           style={{ width: "100px" }}
                         />

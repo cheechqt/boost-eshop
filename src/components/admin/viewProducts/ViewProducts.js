@@ -28,24 +28,24 @@ function ViewProducts() {
     dispatch(STORE_PRODUCTS({ products: data }));
   }, [dispatch, data])
 
-  const deleteProduct = async (id, imageUrl) => {
+  const deleteProduct = async (id, imageURL) => {
     try {
       await deleteDoc(doc(db, "products", id));
-      deleteObject(ref(storage, imageUrl));
+      deleteObject(ref(storage, imageURL));
       toast.success("Product deleted successfully.");
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  const confirmDelete = (id, imageUrl) => {
+  const confirmDelete = (id, imageURL) => {
     Confirm.show(
       "Delete Product",
       "You are about to delete this product",
       "Delete",
       "Cancel",
       function okCb() {
-        deleteProduct(id, imageUrl);
+        deleteProduct(id, imageURL);
       },
       function cancelCb() {
         console.log("Delete Canceled");
@@ -82,13 +82,13 @@ function ViewProducts() {
             </thead>
             <tbody>
               {products.map((product, index) => {
-                const { id, name, price, imageUrl, category } = product;
+                const { id, name, price, imageURL, category } = product;
                 return (
                   <tr key={id}>
                     <td>{index + 1}</td>
                     <td>
                       <img
-                        src={imageUrl}
+                        src={imageURL}
                         alt={name}
                         style={{ width: "100px" }}
                       />
@@ -104,7 +104,7 @@ function ViewProducts() {
                       <FaTrashAlt
                         size={18}
                         color="red"
-                        onClick={() => confirmDelete(id, imageUrl)}
+                        onClick={() => confirmDelete(id, imageURL)}
                       />
                     </td>
                   </tr>

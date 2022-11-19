@@ -19,7 +19,7 @@ const categories = [
 
 const initialState = {
   name: "",
-  imageUrl: "",
+  imageURL: "",
   price: 0,
   category: "",
   brand: "",
@@ -66,7 +66,7 @@ function AddProduct() {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setProduct({ ...product, imageUrl: downloadURL });
+          setProduct({ ...product, imageURL: downloadURL });
           toast.success("Image uploaded successfully.");
         });
       }
@@ -79,7 +79,7 @@ function AddProduct() {
     try {
       addDoc(collection(db, "products"), {
         name: product.name,
-        imageUrl: product.imageUrl,
+        imageURL: product.imageURL,
         price: +product.price,
         category: product.category,
         brand: product.brand,
@@ -101,14 +101,14 @@ function AddProduct() {
     e.preventDefault();
     setIsLoading(true);
 
-    if (product.imageUrl !== productEdit.imageUrl) {
-      deleteObject(ref(storage, productEdit.imageUrl));
+    if (product.imageURL !== productEdit.imageURL) {
+      deleteObject(ref(storage, productEdit.imageURL));
     }
 
     try {
       setDoc(doc(db, "products", id), {
         name: product.name,
-        imageUrl: product.imageUrl,
+        imageURL: product.imageURL,
         price: +product.price,
         category: product.category,
         brand: product.brand,
@@ -162,14 +162,14 @@ function AddProduct() {
                 name="image"
                 onChange={(e) => handleImageChange(e)}
               />
-              {product.imageUrl === "" ? null : (
+              {product.imageURL === "" ? null : (
                 <input
                   type="text"
                   required
                   placeholder="Image URL"
-                  name="imageUrl"
+                  name="imageURL"
                   disabled
-                  value={product.imageUrl}
+                  value={product.imageURL}
                 />
               )}
             </Card>

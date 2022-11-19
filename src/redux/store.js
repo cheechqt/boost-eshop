@@ -4,6 +4,7 @@ import productReducer from "./slice/productSlice";
 import filterReducer from "./slice/filterSlice";
 import cartReducer from "./slice/cartSlice";
 import checkoutSlice from "./slice/checkoutSlice";
+import orderSlice from "./slice/orderSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   filter: filterReducer,
   cart: cartReducer,
   checkout: checkoutSlice,
+  orders: orderSlice
 });
 
 const store = configureStore({

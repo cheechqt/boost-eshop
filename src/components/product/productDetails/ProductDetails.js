@@ -12,33 +12,22 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import spinnerImg from "../../../assets/spinner.jpg";
 import styles from "./ProductDetails.module.scss";
+import useFetchDocument from "../../../hooks/useFetchDocument";
 
 function ProductDetails() {
-  const { id } = useParams();
-
   const [product, setProduct] = useState(null);
+  
+  const { id } = useParams();
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const curItem = cartItems.find((item) => item.id === id);
   const quantityInCart = cartItems.findIndex((item) => item.id === id);
 
-  const getProduct = async () => {
-    const docRef = doc(db, "products", id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      setProduct({
-        id: id,
-        ...docSnap.data(),
-      });
-    } else {
-      toast.error("Product not found");
-    }
-  };
+  const { document } = useFetchDocument("products", id);
 
   useEffect(() => {
-    getProduct();
-  }, []);
+    setProduct(document);
+  }, [document]);
 
   const addToCart = (product) => {
     dispatch(ADD_TO_CART(product));
@@ -63,7 +52,7 @@ function ProductDetails() {
           <>
             <div className={styles.details}>
               <div className={styles.img}>
-                <img src={product.imageUrl} alt={product.name} />
+                <img src={product.imageURL} alt={product.name} />
               </div>
               <div className={styles.content}>
                 <h3>{product.name}</h3>

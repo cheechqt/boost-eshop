@@ -65,7 +65,7 @@ function Header() {
           SET_ACTIVE_USER({
             email: user.email,
             userName: displayName,
-            userId: user.uid,
+            userID: user.uid,
           })
         );
       } else {

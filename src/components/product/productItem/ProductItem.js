@@ -7,7 +7,7 @@ import {
 import Card from "../../card/Card";
 import styles from "./ProductItem.module.scss";
 
-function ProductItem({ grid, product, id, name, price, desc, imageUrl }) {
+function ProductItem({ grid, product, id, name, price, desc, imageURL }) {
   const dispatch = useDispatch();
 
   const shortenText = (text, n) => {
@@ -26,7 +26,7 @@ function ProductItem({ grid, product, id, name, price, desc, imageUrl }) {
     <Card cardClass={grid ? `${styles.grid}` : `${styles.list}`}>
       <Link to={`/product-details/${id}`}>
         <div className={styles.img}>
-          <img src={imageUrl} alt={name} />
+          <img src={imageURL} alt={name} />
         </div>
       </Link>
       <div className={styles.content}>

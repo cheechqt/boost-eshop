@@ -6,11 +6,10 @@ function CheckoutSuccess() {
       <div className="container">
         <h1>Checkout Success</h1>
         <p>Thank you for your purschase</p>
-
         <br />
-        <Link to="/order-history">
-          <button className="--btn --btn-primary">View Order Status</button>
-        </Link>
+        <button className="--btn --btn-primary">
+          <Link to="/order-history">View Order Status</Link>
+        </button>
       </div>
     </section>
   );

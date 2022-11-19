@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { selectPrevUrl } from "../../redux/slice/cartSlice";
+import { selectPrevURL } from "../../redux/slice/cartSlice";
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -21,10 +21,10 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const prevUrl = useSelector(selectPrevUrl);
+  const prevURL = useSelector(selectPrevURL);
 
   const redirectUser = () => {
-    if (prevUrl.includes("cart")) {
+    if (prevURL.includes("cart")) {
       navigate("/cart");
     } else {
       navigate("/");

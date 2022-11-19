@@ -7,7 +7,7 @@ const initialState = {
     : [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
-  prevUrl: "",
+  prevURL: "",
 };
 
 const cartSlice = createSlice({
@@ -88,7 +88,7 @@ const cartSlice = createSlice({
       state.cartTotalQuantity = arr.reduce((acc, next) => acc + next, 0);
     },
     SAVE_URL(state, action) {
-      state.prevUrl = action.payload;
+      state.prevURL = action.payload;
     },
   },
 });
@@ -106,6 +106,6 @@ export const {
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;
 export const selectCartTotalAmount = (state) => state.cart.cartTotalAmount;
-export const selectPrevUrl = (state) => state.cart.prevUrl
+export const selectPrevURL = (state) => state.cart.prevURL
 
 export default cartSlice.reducer;
