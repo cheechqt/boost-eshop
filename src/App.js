@@ -12,6 +12,7 @@ import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
 import OrderHistory from "./pages/orderHistory/OrderHistory";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
 import ReviewProduct from "./components/reviewProducts/ReviewProduct";
+import NotFound from "./pages/notFound/NotFound";
 import "./App.scss";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/order-history" element={<OrderHistory />} />
         <Route path="/order-details/:id" element={<OrderDetails />} />
         <Route path="/review-product/:id" element={<ReviewProduct />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
