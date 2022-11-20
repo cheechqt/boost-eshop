@@ -5,7 +5,7 @@ function Pagination({ productsPerPage, curPage, setCurPage, totalProducts }) {
   const pageNums = [];
   const totalPages = totalProducts / productsPerPage;
   //page nums limit
-  const [pageNum, setPageNum] = useState(5);
+  const [pageNum] = useState(5);
   const [maxNum, setMaxNum] = useState(5);
   const [minNum, setMinNum] = useState(0);
 
@@ -55,6 +55,7 @@ function Pagination({ productsPerPage, curPage, setCurPage, totalProducts }) {
             </li>
           );
         }
+        return null;
       })}
       <li
         onClick={paginateNext}

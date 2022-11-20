@@ -59,7 +59,7 @@ function Checkout() {
         setMessage("Failed to initialize checkout");
         toast.error("Something went wrong!");
       });
-  }, []);
+  }, [billingAddress, cartItems, customerEmail, description, shippingAddress]);
 
   useEffect(() => {
     dispatch(CALC_SUBTOTAL());

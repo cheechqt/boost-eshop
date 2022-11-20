@@ -30,7 +30,9 @@ function Product() {
     <section>
       <div className={`container ${styles.product}`}>
         <aside
-          className={showFilters ? `${styles.filter} ${styles.show}` : `${styles.filter}`}
+          className={
+            showFilters ? `${styles.filter} ${styles.show}` : `${styles.filter}`
+          }
         >
           {isLoading ? null : <ProductFilter />}
         </aside>

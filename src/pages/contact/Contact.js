@@ -14,7 +14,7 @@ function Contact() {
 
     emailjs
       .sendForm(
-        "service_to2a1oa",
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
         "template_ysr4om9",
         form.current,
         "XCgHLnvRV6LMpmPcA"

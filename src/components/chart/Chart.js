@@ -39,7 +39,7 @@ function Chart() {
   const orders = useSelector(selectOrderHistory);
   const orderStatuses = [];
   orders.map((item) => {
-    orderStatuses.push(item.orderStatus);
+    return orderStatuses.push(item.orderStatus);
   });
   const getOrderCount = (arr, value) => {
     return arr.filter((i) => i === value).length;

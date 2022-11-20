@@ -13,7 +13,7 @@ function Slider() {
   const nextSlide = () => {
     setCurrentSlide(currentSlide === slidersCount - 1 ? 0 : currentSlide + 1);
   };
-  
+
   const prevSlide = () => {
     setCurrentSlide(currentSlide === 0 ? slidersCount - 1 : currentSlide - 1);
   };
@@ -49,9 +49,17 @@ function Slider() {
                   <h2>{heading}</h2>
                   <p>{desc}</p>
                   <hr />
-                  <a href="#product" className="--btn --btn-primary">
+                  <button
+                    className="--btn --btn-primary"
+                    onClick={() => {
+                      window.scrollTo({
+                        top: 500,
+                        behavior: "smooth",
+                      });
+                    }}
+                  >
                     Shop Now
-                  </a>
+                  </button>
                 </div>
               </>
             )}

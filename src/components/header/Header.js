@@ -18,26 +18,6 @@ import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
 import { AdminOnlyLink } from "../adminOnly/AdminOnly";
 import styles from "./Header.module.scss";
 
-const logo = (
-  <div className={styles.logo}>
-    <Link>
-      <h2>
-        e<span>Shop</span>.
-      </h2>
-    </Link>
-  </div>
-);
-
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart
-      <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
-
 const activeLink = ({ isActive }) =>
   isActive ? `${styles.active}` : undefined;
 
@@ -119,9 +99,9 @@ function Header() {
 
   const logo = (
     <div className={styles.logo}>
-      <Link>
+      <Link to="/">
         <h2>
-          e<span>Shop</span>.
+          e<span>Sponge</span>.
         </h2>
       </Link>
     </div>

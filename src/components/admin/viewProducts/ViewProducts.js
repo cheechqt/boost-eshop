@@ -28,7 +28,7 @@ function ViewProducts() {
   const filteredProducts = useSelector(selectFilteredProducts);
 
   const [curPage, setCurPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(10);
+  const [productsPerPage] = useState(10);
   const indexOfLastProduct = curPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const curProducts = filteredProducts.slice(
