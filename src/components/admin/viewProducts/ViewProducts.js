@@ -1,32 +1,50 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProducts, STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 import { toast } from "react-toastify";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { doc, deleteDoc } from "firebase/firestore";
 import { ref, deleteObject } from "firebase/storage";
 import { db, storage } from "../../../firebase/config";
 import { Confirm } from "notiflix/build/notiflix-confirm-aio";
 import useFetchCollection from "../../../hooks/useFetchCollection";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import {
+  selectProducts,
+  STORE_PRODUCTS,
+} from "../../../redux/slice/productSlice";
+import {
+  FILTER_BY_SEARCH,
+  selectFilteredProducts,
+} from "../../../redux/slice/filterSlice";
 import Loader from "../../loader/Loader";
+import Search from "../../search/Search";
+import Pagination from "../../pagination/Pagination";
 import styles from "./ViewProducts.module.scss";
 
 function ViewProducts() {
+  const [search, setSearch] = useState("");
   const { data, isLoading } = useFetchCollection("products");
-  const products = useSelector(selectProducts)
+  const products = useSelector(selectProducts);
+  const filteredProducts = useSelector(selectFilteredProducts);
+
+  const [curPage, setCurPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(10);
+  const indexOfLastProduct = curPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const curProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(STORE_PRODUCTS({ products: data }));
-  }, [dispatch, data])
+  }, [dispatch, data]);
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }));
+  }, [search, products, dispatch]);
 
   const deleteProduct = async (id, imageURL) => {
     try {
@@ -65,7 +83,12 @@ function ViewProducts() {
       {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
-
+        <div className={styles.search}>
+          <p>
+            <b>{filteredProducts.length}</b> product(s) found
+          </p>
+          <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
         {products.length === 0 ? (
           <p>No products found</p>
         ) : (
@@ -81,7 +104,7 @@ function ViewProducts() {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => {
+              {curProducts.map((product, index) => {
                 const { id, name, price, imageURL, category } = product;
                 return (
                   <tr key={id}>
@@ -113,6 +136,12 @@ function ViewProducts() {
             </tbody>
           </table>
         )}
+        <Pagination
+          productsPerPage={productsPerPage}
+          curPage={curPage}
+          setCurPage={setCurPage}
+          totalProducts={filteredProducts.length}
+        />
       </div>
     </>
   );

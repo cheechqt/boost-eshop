@@ -18,7 +18,6 @@ function ProductList({ products }) {
   const [sort, setSort] = useState("latest");
   const filteredProducts = useSelector(selectFilteredProducts);
 
-  // Pagination
   const [curPage, setCurPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(9);
   const indexOfLastProduct = curPage * productsPerPage;
@@ -55,7 +54,7 @@ function ProductList({ products }) {
             {filteredProducts.length === 1 ? "" : "s"} found.
           </p>
         </div>
-        {/* Search Icon */}
+        {/* Search */}
         <div>
           <Search value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
