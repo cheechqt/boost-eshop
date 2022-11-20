@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import StarsRating from "react-star-rate";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_TO_CART,
@@ -8,22 +8,23 @@ import {
   DECREASE_CART,
   selectCartItems,
 } from "../../../redux/slice/cartSlice";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../firebase/config";
+import useFetchDocument from "../../../hooks/useFetchDocument";
+import useFetchCollection from "../../../hooks/useFetchCollection";
+import Card from "../../card/Card";
 import spinnerImg from "../../../assets/spinner.jpg";
 import styles from "./ProductDetails.module.scss";
-import useFetchDocument from "../../../hooks/useFetchDocument";
 
 function ProductDetails() {
   const [product, setProduct] = useState(null);
-  
+
   const { id } = useParams();
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const curItem = cartItems.find((item) => item.id === id);
   const quantityInCart = cartItems.findIndex((item) => item.id === id);
-
   const { document } = useFetchDocument("products", id);
+  const { data } = useFetchCollection("reviews");
+  const filteredReviews = data.filter((review) => review.productID === id);
 
   useEffect(() => {
     setProduct(document);
@@ -65,7 +66,7 @@ function ProductDetails() {
                   <b>Brand</b> {product.brand}
                 </p>
 
-                {quantityInCart > 0 && (
+                {quantityInCart > 0 ? (
                   <div className={styles.count}>
                     <button
                       className="--btn"
@@ -83,18 +84,43 @@ function ProductDetails() {
                       +
                     </button>
                   </div>
+                ) : (
+                  <button
+                    className="--btn --btn-danger"
+                    onClick={() => addToCart(product)}
+                  >
+                    ADD TO CART
+                  </button>
                 )}
-
-                <button
-                  className="--btn --btn-danger"
-                  onClick={() => addToCart(product)}
-                >
-                  ADD TO CART
-                </button>
               </div>
             </div>
           </>
         )}
+        <Card cardClass={styles.card}>
+          <h3>Product Reviews</h3>
+          {filteredReviews.length === 0 ? (
+            <p>There are no reviews for this product yet.</p>
+          ) : (
+            <>
+              {filteredReviews.map((item, index) => {
+                const { rate, review, reviewDate, userName } = item;
+                return (
+                  <div key={index} className={styles.review}>
+                    <StarsRating value={rate} />
+                    <p>{review}</p>
+                    <span>
+                      <b>{reviewDate}</b>
+                    </span>
+                    <br />
+                    <span>
+                      <b>by: {userName}</b>
+                    </span>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </Card>
       </div>
     </section>
   );
