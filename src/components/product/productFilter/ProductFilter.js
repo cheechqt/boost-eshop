@@ -15,7 +15,7 @@ import styles from "./ProductFilter.module.scss";
 function ProductFilter() {
   const [category, setCategory] = useState("All");
   const [brand, setBrand] = useState("All");
-  const [price, setPrice] = useState(3000);
+  const [price, setPrice] = useState(1000);
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
   const minPrice = useSelector(selectMinPrice);

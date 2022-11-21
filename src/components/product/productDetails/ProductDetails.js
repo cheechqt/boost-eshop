@@ -24,8 +24,8 @@ function ProductDetails() {
   const { data } = useFetchCollection("reviews");
   const filteredReviews = data.filter((review) => review.productID === id);
 
-   const curItem = cartItems.find((item) => item.id === id);
-   const quantityInCart = cartItems.findIndex((item) => item.id === id);
+  const curItem = cartItems.find((item) => item.id === id);
+  const quantityInCart = cartItems.findIndex((item) => item.id === id);
 
   useEffect(() => {
     setProduct(document);
@@ -60,13 +60,13 @@ function ProductDetails() {
               <div className={styles.content}>
                 <h3>{product.name}</h3>
                 <p className={styles.price}>{`$${product.price}`}</p>
-                <p>{product.desc}</p>
+                <p style={{ whiteSpace: "pre-wrap" }}>{product.desc}</p>
                 <p>
                   <b>SKU</b> {product.id}
                 </p>
-                <p>
+                {/* <p>
                   <b>Brand</b> {product.brand}
-                </p>
+                </p> */}
 
                 {quantityInCart > 0 ? (
                   <div className={styles.count}>
