@@ -1,6 +1,6 @@
 # World of Warcraft boosting online shop
 
-[example1.gif](https://s4.gifyu.com/images/example1.gif)](https://gifyu.com/image/ShTVE)
+![example1.gif](https://s4.gifyu.com/images/example1.gif)](https://gifyu.com/image/ShTVE)
 
 ## В проекте реализовано:
 
