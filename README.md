@@ -1,6 +1,7 @@
 # World of Warcraft boosting online shop
 
-![example1.gif](https://s4.gifyu.com/images/example1.gif)](https://gifyu.com/image/ShTVE)
+![Example](https://github.com/cheechqt/boost-eshop/blob/main/example1.gif "WoW boost eshop")
+
 
 ## В проекте реализовано:
 
