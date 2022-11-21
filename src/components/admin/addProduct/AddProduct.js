@@ -11,10 +11,10 @@ import Card from "../../card/Card";
 import styles from "./AddProduct.module.scss";
 
 const categories = [
-  { id: 1, name: "Laptop" },
-  { id: 2, name: "Electronics" },
-  { id: 3, name: "Fashion" },
-  { id: 4, name: "Phone" },
+  { id: 1, name: "Raids" },
+  { id: 2, name: "Dungeons" },
+  { id: 3, name: "PVP" },
+  { id: 4, name: "Gold" },
 ];
 
 const initialState = {

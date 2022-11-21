@@ -1,22 +1,27 @@
+import raidsImg from "../../assets/raids.jpeg";
+import dungeonsImg from "../../assets/dungeons.jpeg";
+import pvpImg from "../../assets/pvp.jpeg";
+import goldImg from "../../assets/gold.png";
+
 export const sliderData = [
   {
-    image: "https://i.ibb.co/CBGRLhG/bg-4.jpg",
-    heading: "Shoes Villa",
-    desc: "Up to 30% off on all onsale proucts.",
+    image: raidsImg,
+    heading: "Raids",
+    desc: "Up to 30% off on all onsale products.",
   },
   {
-    image: "https://i.ibb.co/cDLBk5h/bg-1.jpg",
-    heading: "Women Fashion",
-    desc: "Up to 30% off on all onsale proucts.",
+    image: dungeonsImg,
+    heading: "Mythic Dungeons",
+    desc: "Up to 30% off on all onsale products.",
   },
   {
-    image: "https://i.ibb.co/HXjD3V0/bg-2.jpg",
-    heading: "Men Fashion",
-    desc: "Up to 30% off on all onsale proucts.",
+    image: pvpImg,
+    heading: "PVP",
+    desc: "Up to 30% off on all onsale products.",
   },
   {
-    image: "https://i.ibb.co/H2FRmtV/bg-3.jpg",
-    heading: "Awesome Gadgets",
-    desc: "Up to 30% off on all onsale proucts.",
+    image: goldImg,
+    heading: "Gold",
+    desc: "Up to 30% off on all onsale products.",
   },
 ];

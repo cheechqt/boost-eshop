@@ -1,9 +1,9 @@
 .product-list {
   width: 100%;
-
+  background-color: var(--dark-blue);
   .top {
     width: 100%;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid  var(--color-gray);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,13 +25,14 @@
         font-size: 1.4rem;
         font-weight: 500;
         margin: 0 5px;
+        
       }
 
       select {
         font-size: 1.6rem;
         font-weight: 300;
         border: none;
-        // border-bottom: 1px solid #777;
+        border-bottom: 1px solid #777;
         outline: none;
       }
     }
@@ -81,5 +82,5 @@
 
   flex-wrap: wrap;
   // padding: 1rem 0;
-  background-color: #fffdf7;
+  background-color: var(--dark-blue);
 }

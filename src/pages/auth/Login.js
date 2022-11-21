@@ -91,7 +91,9 @@ function Login() {
                 Login
               </button>
               <div className={styles.links}>
-                <Link to="/reset">Reset Password</Link>
+                <Link to="/reset" style={{ color: "orangered" }}>
+                  Reset Password
+                </Link>
               </div>
               <p>-- or --</p>
             </form>
@@ -103,7 +105,9 @@ function Login() {
             </button>
             <span className={styles.register}>
               <p>Don't have an account?</p>
-              <Link to="/register">Register</Link>
+              <Link to="/register" style={{ color: "orangered" }}>
+                Register
+              </Link>
             </span>
           </div>
         </Card>

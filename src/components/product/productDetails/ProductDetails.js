@@ -20,11 +20,12 @@ function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
-  const curItem = cartItems.find((item) => item.id === id);
-  const quantityInCart = cartItems.findIndex((item) => item.id === id);
   const { document } = useFetchDocument("products", id);
   const { data } = useFetchCollection("reviews");
   const filteredReviews = data.filter((review) => review.productID === id);
+
+   const curItem = cartItems.find((item) => item.id === id);
+   const quantityInCart = cartItems.findIndex((item) => item.id === id);
 
   useEffect(() => {
     setProduct(document);
@@ -39,6 +40,7 @@ function ProductDetails() {
     dispatch(DECREASE_CART(product));
     dispatch(CALC_TOTAL_QUANTITY());
   };
+  console.log(cartItems, quantityInCart);
 
   return (
     <section>

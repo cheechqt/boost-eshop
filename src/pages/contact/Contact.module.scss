@@ -1,17 +1,17 @@
 .contact {
   .card {
     padding: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-gray);
   }
 
   .card2 {
     padding: 2rem;
     background-color: var(--light-blue);
-    color: #fff;
+    color: var(--color-gray);
 
     h3,
     p {
-      color: #fff;
+      color: var(--color-gray);
     }
 
     .icons {

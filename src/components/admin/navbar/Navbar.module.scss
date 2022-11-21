@@ -11,7 +11,7 @@
     background-color: var(--light-blue);
 
     h4 {
-      color: #fff;
+      color: var(--color-gray);
     }
   }
 
@@ -23,6 +23,7 @@
       a {
         display: block;
         width: 100%;
+        color: var(--color-gray);
       }
     }
   }

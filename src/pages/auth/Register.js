@@ -73,7 +73,9 @@ function Register() {
 
             <span className={styles.register}>
               <p>Already an account?</p>
-              <Link to="/login">Login</Link>
+              <Link to="/login" style={{ color: "orangered" }}>
+                Login
+              </Link>
             </span>
           </div>
         </Card>

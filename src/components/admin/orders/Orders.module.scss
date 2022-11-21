@@ -7,6 +7,7 @@
     border-collapse: collapse;
     width: 100%;
     font-size: 1.4rem;
+    color: var(--color-gray);
 
     thead {
       border-top: 2px solid var(--light-blue);
@@ -37,7 +38,7 @@
     }
 
     tr:nth-child(even) {
-      background-color: #eee;
+      background-color: var(--light-blue);
     }
 
     .pending {
