@@ -1,5 +1,7 @@
 # World of Warcraft boosting online shop
 
+![Example](https://gifyu.com/image/ShTVE "WoW boost eshop")
+
 ## В проекте реализовано:
 
 - аутентификация

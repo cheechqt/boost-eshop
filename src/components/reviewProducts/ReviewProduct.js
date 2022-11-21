@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import StarsRating from "react-star-rate";
 import { toast } from "react-toastify";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
@@ -53,7 +53,7 @@ function ReviewProduct() {
         {product === null ? (
           <img src={spinnerImg} alt="Loading..." style={{ width: "50px" }} />
         ) : (
-          <>
+          <Link to={`/product-details/${id}`}>
             <p>
               <b>Product name:</b> {product.name}
             </p>
@@ -62,7 +62,7 @@ function ReviewProduct() {
               alt={product.name}
               style={{ width: "100px" }}
             />
-          </>
+          </Link>
         )}
         <Card cardClass={styles.card}>
           <form onSubmit={(e) => submitReview(e)}>

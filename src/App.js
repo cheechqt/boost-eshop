@@ -18,7 +18,7 @@ import "./App.scss";
 function App() {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} theme="dark" />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

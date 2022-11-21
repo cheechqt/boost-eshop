@@ -91,14 +91,16 @@ function Cart() {
                     <tr key={id}>
                       <td>{index + 1}</td>
                       <td>
-                        <p>
-                          <b>{name}</b>
-                        </p>
-                        <img
-                          src={imageURL}
-                          alt={name}
-                          style={{ width: "100px" }}
-                        />
+                        <Link to={`/product-details/${id}`}>
+                          <p>
+                            <b>{name}</b>
+                          </p>
+                          <img
+                            src={imageURL}
+                            alt={name}
+                            style={{ width: "100px" }}
+                          />
+                        </Link>
                       </td>
                       <td>{price}</td>
                       <td>
