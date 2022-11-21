@@ -1,6 +1,7 @@
 # World of Warcraft boosting online shop
 
-![Example](https://github.com/cheechqt/boost-eshop/blob/main/example1.gif "WoW boost eshop")
+## Quick example
+![Example](https://github.com/cheechqt/boost-eshop/blob/main/quickExample.gif "WoW boost eshop")
 
 
 ## В проекте реализовано:
