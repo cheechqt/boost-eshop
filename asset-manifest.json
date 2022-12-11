@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/boost-eshop/static/css/main.122e71d9.css",
-    "main.js": "/boost-eshop/static/js/main.f0517369.js",
+    "main.js": "/boost-eshop/static/js/main.32266b1b.js",
     "static/media/gold.png": "/boost-eshop/static/media/gold.ac8df9339930c26fb9d1.png",
     "static/media/raids.jpeg": "/boost-eshop/static/media/raids.36f6b9b1054f80f957bd.jpeg",
     "static/media/pvp.jpeg": "/boost-eshop/static/media/pvp.feef526e95a6ba9276ea.jpeg",
@@ -13,10 +13,10 @@
     "static/media/loader.gif": "/boost-eshop/static/media/loader.9d11df4bdd0bb34de773.gif",
     "index.html": "/boost-eshop/index.html",
     "main.122e71d9.css.map": "/boost-eshop/static/css/main.122e71d9.css.map",
-    "main.f0517369.js.map": "/boost-eshop/static/js/main.f0517369.js.map"
+    "main.32266b1b.js.map": "/boost-eshop/static/js/main.32266b1b.js.map"
   },
   "entrypoints": [
     "static/css/main.122e71d9.css",
-    "static/js/main.f0517369.js"
+    "static/js/main.32266b1b.js"
   ]
 }
