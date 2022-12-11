@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {/* <BrowserRouter basename="/boost-eshop/"> */}
-    <BrowserRouter>
+    <BrowserRouter basename="/boost-eshop/">
       <Provider store={store}>
         <App />
       </Provider>
